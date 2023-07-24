@@ -12,7 +12,8 @@ Node.js
 Android Studio  
 
 ## Notes
-- APK File included for demostration purposes.  
+- [Try the app in your browser](https://xariap.github.io/school-assist/)
+- APK File included for mobile demostration.  
 - Not all files to rebuild the app may be here.
 - Code written in 2018 and may not reflect my current coding style and use of best practices.   
 
