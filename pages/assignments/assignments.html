@@ -1,0 +1,124 @@
+<ion-header>
+  <ion-navbar color="royal">
+    <ion-title> <span *ngIf="showStore==false"> Assignments </span> <span *ngIf="showStore"> Key Store </span>
+      ({{ myPoints }} <ion-icon name="key"></ion-icon>)
+      <span style="float:right"> <ion-icon name="{{Time.skyicon}}"></ion-icon> {{Time.myTime}} {{Time.sky}} </span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="{{ Time.bgtheme }}">
+  <div align="center">
+    <ion-card class="box" color="{{ Time.card }}" style="width:75%">
+        {{ Time.Date }}
+    </ion-card>
+  </div>
+
+  <div *ngIf="showStore">
+    <button ion-button color="{{ Time.card }}" (click)="Time.custombg()"> Change Background </button>
+    <button ion-button color="{{Time.card}}" (click)="showStore=false"> Exit Store </button>
+    <ion-item color="{{ Time.card }}">
+      <ion-label>Profile Images</ion-label>
+    </ion-item>
+
+    <ion-list>
+      <ion-item *ngFor="let index of StoreItems" color="{{Time.card}}">
+        <ion-thumbnail item-start> <img src="assets/imgs/{{index.folder}}/{{index.path}}"> </ion-thumbnail>
+        <h2> {{ index.status }} </h2>
+        
+        <button *ngIf="index.status == 'Not Owned'" ion-button clear item-end (click)="buy(index)">Buy for {{index.price}} <ion-icon name="key"></ion-icon></button>
+        <button *ngIf="index.status != 'Not Owned'" ion-button clear item-end (click)="open('Profile')">Visit Profile</button>
+      </ion-item>
+    </ion-list>
+
+    <button ion-button color="{{Time.card}}" (click)="restock()"> Check for New Items </button>
+    <button ion-button color="{{Time.card}}" (click)="removesets()"> Remove Bonus Sets </button>
+    <br><br><br>
+  </div>
+
+  <div *ngIf="showStore==false">
+    <button ion-button color="royal" (click)="toogleform('new')"> {{ text }} </button>
+
+    <div id="NewItem" *ngIf="show">
+      <ion-item color="{{ Time.card }}">
+        <ion-label>My Subjects</ion-label>
+      </ion-item>
+      <ion-item *ngIf="nosub">
+        <ion-label>You have not added any subjects!</ion-label>
+      </ion-item>
+
+      <ion-list radio-group [(ngModel)]="subject">
+        <ion-item *ngFor="let option of mySubjects">
+          <ion-label>{{ option }}</ion-label>
+          <ion-radio value="{{ option }}" color="secondary"></ion-radio>
+        </ion-item>
+      </ion-list>
+      <br>
+      <ion-list>
+        <ion-item>
+          <ion-label color="royal">Subject</ion-label>
+          <ion-input [(ngModel)]="subject" placeholder="Text Input"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="royal">Assignment</ion-label>
+          <ion-input [(ngModel)]="LatestWork" placeholder="Text Input"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="royal">Due Date</ion-label>
+          <ion-datetime min="{{currentyear}}" max="{{currentyear + 1}}" displayFormat="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="Due"></ion-datetime>
+        </ion-item>
+      </ion-list>
+
+      <p align="right" *ngIf="edit==false">
+        <button ion-button color="royal" (click)="addwork('new')"> Done </button>
+      </p>
+
+      <p align="right" *ngIf="edit">
+        <button ion-button color="royal" (click)="addwork('edit')"> Save Changes </button>
+      </p>
+    </div>
+    
+    <button ion-button color="danger" (click)="warning('all')"> Clear All </button>
+    <button ion-button color="{{Time.card}}" (click)="Time.custombg()"> Change Background </button>
+    <button ion-button color="{{Time.card}}" (click)="showStore=true"> Open Store </button>
+    <!-- <button ion-button color="danger" (click)="showAssign('!overdue')"> Hide Overdue </button>
+    <button ion-button color="royal" (click)="showAssign('all')"> Show All </button> -->
+    <p></p>
+
+    <ion-list>
+      <button color="{{ Time.card }}" ion-item *ngFor="let index of shownAssignments; let i = index;" (click)="options(index.id)">
+        <b> {{i + 1}}. {{ index.subject }} </b>
+        <p> {{ index.task }} </p>
+        <p> Due: {{ index.due }} </p>
+          <p style="float:left"> <ion-badge color="{{index.typecolor}}" item-start> {{index.type}} </ion-badge> </p>
+          <p style="float:right"> {{ index.notice }} <ion-badge color="{{index.status}}" item-end>{{ index.daysleft + 1}}<ion-icon name="key"></ion-icon></ion-badge> </p>
+        </button>
+      </ion-list>
+
+    <br><br><br>
+    <ion-card class="box" color="{{ Time.card }}"> <span *ngIf="showAssignment == 'all'">Your Labels</span> <span *ngIf="showAssignment != 'all'">Showing {{showAssignment}}</span> </ion-card>
+    <button ion-button style="width: max-content;" *ngFor="let tag of myTags" color="{{tag.color}}" (click)="tagOpts(tag)"> {{tag.tag}} </button>
+    <button ion-button color="{{ Time.card }}" (click)="addTag()"> Add Tag </button>
+    <br><br><br><br>
+  </div>
+  
+  <ion-fab bottom center>
+    <button color="royal" ion-fab>Menu</button>
+    <ion-fab-list side="left">
+      <button color="fog" ion-fab (click)="open('Timetable')"><ion-icon name="school"></ion-icon></button>
+      <button color="fog" ion-fab (click)="open('Profile')"><ion-icon name="person"></ion-icon></button>
+    </ion-fab-list>
+    <ion-fab-list side="right">
+      <button color="fog" ion-fab (click)="open('Calculator')"><ion-icon name="calculator"></ion-icon></button>
+      <button color="fog" ion-fab color="dark"><ion-icon name="paper"></ion-icon></button>
+    </ion-fab-list>
+    <ion-fab-list side="top">
+      <button color="fog" ion-fab (click)="open('Home')"><ion-icon name="home"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+  
+  <ion-fab bottom left>
+    <button ion-fab color="{{Time.card}}" (click)="help()"><ion-icon name="help"></ion-icon></button>
+  </ion-fab>
+
+</ion-content>

@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-navbar color="sky">
+    <ion-title> Event Timetable
+      <span style="float:right"> <ion-icon name="{{ Time.skyicon }}"></ion-icon> {{Time.myTime}} {{Time.sky}} </span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding class="{{ Time.bgtheme }}">
+  <div align="center">
+    <ion-card center class="box" color="{{ Time.card }}"> {{ Time.Date }} </ion-card>
+  </div>
+
+  <div id="notice">
+    <button ion-button color="sky" (click)="add(currentday)"> <ion-icon name="add"> </ion-icon> &emsp; Add Activity to {{ week[display] }} </button>
+  </div>
+  <br>
+
+  <ion-list>
+    <button color="{{su}}" ion-item (click)="changedisplay(0)"> Sunday <ion-badge item-end>{{sunnum}} <ion-icon name="calendar"></ion-icon></ion-badge> </button>
+    <div *ngIf="display==0">
+      <button ion-item (click)="remove('sun', period.i)" (press)="edit('sun', period.i)" color="{{Time.card}}" *ngFor="let period of sun"> {{ period.event }} </button>
+    </div>
+  </ion-list>
+
+  <ion-list>
+    <button color="{{m}}" ion-item (click)="changedisplay(1)"> Monday <ion-badge item-end>{{monnum}} <ion-icon name="calendar"></ion-icon></ion-badge> </button>
+    <div *ngIf="display==1">
+      <button ion-item (click)="remove('mon', period.i)" (press)="edit('mon', period.i)" color="{{Time.card}}" *ngFor="let period of mon"> {{ period.event }} </button>
+    </div>
+  </ion-list>
+
+  <ion-list>
+    <button color="{{t}}" ion-item (click)="changedisplay(2)"> Tuesday <ion-badge item-end>{{tuesnum}} <ion-icon name="calendar"></ion-icon></ion-badge> </button>
+    <div *ngIf="display==2">
+      <button ion-item (click)="remove('tues', period.i)" (press)="edit('tues', period.i)" color="{{Time.card}}" *ngFor="let period of tues"> {{ period.event }} </button>
+    </div>
+  </ion-list>
+
+  <ion-list>
+    <button color="{{w}}" ion-item (click)="changedisplay(3)"> Wednesday <ion-badge item-end>{{wednum}} <ion-icon name="calendar"></ion-icon></ion-badge> </button>
+    <div *ngIf="display==3">
+      <button ion-item (click)="remove('wed', period.i)" (press)="edit('wed', period.i)" color="{{Time.card}}" *ngFor="let period of wed"> {{ period.event }} </button>
+    </div>
+  </ion-list>
+
+  <ion-list>
+    <button color="{{th}}" ion-item (click)="changedisplay(4)"> Thursday <ion-badge item-end>{{thursnum}} <ion-icon name="calendar"></ion-icon></ion-badge> </button>
+    <div *ngIf="display==4">
+      <button ion-item (click)="remove('thurs', period.i)" (press)="edit('thurs', period.i)" color="{{Time.card}}" *ngFor="let period of thurs"> {{ period.event }} </button>
+    </div>
+  </ion-list>
+
+  <ion-list>
+    <button color="{{f}}" ion-item (click)="changedisplay(5)"> Friday <ion-badge item-end>{{frinum}} <ion-icon name="calendar"></ion-icon></ion-badge> </button>
+    <div *ngIf="display==5">
+      <button ion-item (click)="remove('fri', period.i)" (press)="edit('fri', period.i)" color="{{Time.card}}" *ngFor="let period of fri"> {{ period.event }} </button>
+    </div>
+  </ion-list>
+
+  <ion-list>
+    <button color="{{s}}" ion-item (click)="changedisplay(6)"> Saturday <ion-badge item-end>{{satnum}} <ion-icon name="calendar"></ion-icon></ion-badge> </button>
+    <div *ngIf="display==6">
+      <button ion-item (click)="remove('sat', period.i)" (press)="edit('sat', period.i)" color="{{Time.card}}" *ngFor="let period of sat"> {{ period.event }} </button>
+    </div>
+  </ion-list>
+
+  <br><br>
+
+  <ion-fab bottom center>
+    <button color="royal" ion-fab>Menu</button>
+    <ion-fab-list side="left">
+      <button color="fog" ion-fab color="dark"><ion-icon name="school"></ion-icon></button>
+      <button color="fog" ion-fab (click)="open('Profile')"><ion-icon name="person"></ion-icon></button>
+    </ion-fab-list>
+    <ion-fab-list side="right">
+      <button color="fog" ion-fab (click)="open('Calculator')"><ion-icon name="calculator"></ion-icon></button>
+      <button color="fog" ion-fab (click)="open('Assignments')"><ion-icon name="paper"></ion-icon></button>
+    </ion-fab-list>
+
+    <ion-fab-list side="top">
+        <button color="fog" ion-fab (click)="open('Home')"><ion-icon name="home"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab bottom left>
+    <button ion-fab color="{{Time.card}}" (click)="help()"><ion-icon name="help"></ion-icon></button>
+  </ion-fab>
+
+</ion-content>

@@ -1,0 +1,93 @@
+<ion-content padding class="{{bgtheme}}" id="circle">
+
+  <h1 align="center" style="color: white" (click)="switchtime()">
+    <ion-icon name="{{skyicon}}"></ion-icon> {{myTime}} {{sky}}
+  </h1>
+
+  <div *ngIf="Noti.ShowBirth">
+    <ion-card class="box" color="{{ Noti.card }}" (click)="Noti.presentAlert('Birthday')"> <ion-icon name="images"></ion-icon> Happy Birthday {{ Noti.user }}! <ion-icon name="ice-cream"></ion-icon> </ion-card>
+  </div>
+  <div *ngIf="Noti.ShowBirth == false && Noti.Holiday == false">
+    <ion-card class="box" color="{{ Noti.card }}"> {{Noti.Date}} </ion-card>
+  </div>
+  <div *ngIf="Noti.Holiday != false">
+    <ion-card class="box" color="{{ Noti.card }}" (click)="Noti.presentAlert(Noti.Holiday)"> <ion-icon name="snow"></ion-icon> {{Noti.Holiday}} {{Noti.user}}!! <ion-icon name="snow"></ion-icon> </ion-card>
+  </div>
+
+  <div *ngIf="ShowDeadlines==false && ShowEvents==false">
+    <div style="text-align:center;">
+      <img src="assets/imgs/{{ avatar }}" (swipe)="switch()" style="border-radius: 100%" height="200px" width="200px">
+    </div>
+
+    <button ion-button full color="royal" (click)="open('Profile')"> View Student Profile </button>
+    <button ion-button full color="sky" (click)="open('Timetable')"> Event Timetable </button>
+    <button ion-button full color="royal" (click)="open('Assignments')"> Your Assignments </button>
+    <button ion-button full color="sky" (click)="open('Calculator')"> Calculator </button>
+  
+    <br>
+
+    <ion-item color="clear" style="border-radius: 100px; border: none">
+      <ion-range min="1" max="4" step="1" snaps="true" color="royal" [(ngModel)]="stime" (ionChange)="changetime(stime)">
+        <ion-icon range-left name="sunny" color="gold"></ion-icon>
+        <ion-icon range-right name="moon" color="light"></ion-icon>
+      </ion-range>
+    </ion-item>
+    <br>
+  </div>
+  
+  <div align="center"><ion-card class="box" color="{{ Noti.card }}"> Notices & Reminders </ion-card></div>
+
+  <button id="meh" *ngIf="ShowDeadlines==true" ion-button color="{{ Noti.card }}" (click)="ShowDeadlines = false"> Close Deadlines &emsp; <ion-badge item-end> {{ Noti.numdue }} <ion-icon name="paper"></ion-icon> </ion-badge></button>
+  <button id="meh" *ngIf="ShowDeadlines==false" ion-button color="{{ Noti.card }}" (click)="ShowDeadlines = true; ShowEvents = false"> View Deadlines &emsp; <ion-badge> {{ Noti.numdue }} <ion-icon name="paper"></ion-icon> </ion-badge></button>
+  
+  <button id="meh" *ngIf="ShowEvents==true" ion-button color="{{ Noti.card }}" (click)="ShowEvents = false"> Close Events &emsp; <ion-badge> {{Noti.EventStatus}} <ion-icon name="school"></ion-icon> </ion-badge></button>
+  <button id="meh" *ngIf="ShowEvents==false" ion-button color="{{ Noti.card }}" (click)="ShowEvents = true; ShowDeadlines = false"> View Events &emsp; <ion-badge> {{Noti.EventStatus}} <ion-icon name="school"></ion-icon></ion-badge></button>
+
+  <div *ngIf="ShowDeadlines">
+    <br>
+    <ion-item color="primary"> Work due Today! </ion-item>
+    <div *ngFor="let num of Noti.myAssignments">
+      <button id="meh" ion-button full *ngIf="num.daysleft==0" color="{{ Noti.card }}" (click)="Noti.DueAlert(num)"> {{ num.subject }} </button>
+    </div>
+    <br>
+    <ion-item color="secondary"> Work due Tomorrow! </ion-item>
+    <div *ngFor="let num of Noti.myAssignments">
+      <button id="meh" ion-button full *ngIf="num.daysleft==1" color="{{ Noti.card }}" (click)="Noti.DueAlert(num)"> {{ num.subject }} </button>
+    </div>
+    <br>
+    <ion-item color="dark"> Work due in less than a week </ion-item>
+    <div *ngFor="let num of Noti.myAssignments">
+      <button id="meh" ion-button full *ngIf="num.daysleft<=7 && num.daysleft>1" color="{{ Noti.card }}" (click)="Noti.DueAlert(num)"> {{ num.subject }} </button>
+    </div>
+    <br> <br> <br>
+  </div>
+
+  <div *ngIf="ShowEvents">
+    <br> <ion-item color="royal"> Today's Schedule! </ion-item>
+    <ion-item no-lines color="{{ Noti.card }}" *ngFor="let num of Noti.myEvents">
+      <ion-label> {{num.event.event}} </ion-label>
+      <ion-checkbox color="secondary" [(ngModel)]="num.done" (ionChange)="saveProgress()"></ion-checkbox>
+    </ion-item>
+  </div>
+
+  <ion-fab bottom center *ngIf="ShowEvents || ShowDeadlines">
+    <button color="royal" ion-fab>Menu</button>
+    <ion-fab-list side="left">
+      <button color="fog" ion-fab (click)="open('Timetable')"><ion-icon name="school"></ion-icon></button>
+      <button color="fog" ion-fab (click)="open('Profile')"><ion-icon name="person"></ion-icon></button>
+    </ion-fab-list>
+    <ion-fab-list side="right">
+      <button color="fog" ion-fab (click)="open('Calculator')"><ion-icon name="calculator"></ion-icon></button>
+      <button color="fog" ion-fab (click)="open('Assignments')"><ion-icon name="paper"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab bottom right>
+    <button ion-fab mini color="{{Noti.card}}" (click)='credits()'> <ion-icon name="information-circle"></ion-icon></button>
+  </ion-fab>
+
+  <ion-fab bottom right>
+    <button ion-fab mini color="{{Noti.card}}" (click)='reset()'> <ion-icon name="refresh"></ion-icon></button>
+  </ion-fab>
+
+</ion-content>

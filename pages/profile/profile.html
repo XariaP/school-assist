@@ -1,0 +1,193 @@
+<ion-header>
+  <ion-navbar color="sky">
+    <ion-title>
+      {{ FirstName }}'s Profile
+      <span style="float:right"> <ion-icon name="{{ Time.skyicon }}"></ion-icon> {{Time.myTime}} {{Time.sky}} </span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="{{Time.bgtheme}}">
+  
+  <div id="notice">
+    <button id="notice" *ngIf="ShowBirth" ion-button color="{{ Time.card }}" (click)="presentAlert('Birthday')"> It's your birthday! </button>
+  </div>
+
+  <button ion-button full color="royal" (click)="toogleform()"> {{ text }} </button>
+  
+  <p> </p>
+  <div id="NewUser" *ngIf="show">
+    <ion-item>
+      <ion-label color="royal">Level of Education</ion-label>
+    </ion-item>
+    <ion-list radio-group [(ngModel)]="Level">
+      <ion-item>
+        <ion-label>  &emsp; University </ion-label>
+        <ion-radio value="University" color="secondary"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label> &emsp; Secondary School </ion-label>
+        <ion-radio value="Secondary School" color="secondary"></ion-radio>
+      </ion-item>
+    </ion-list>
+
+    <ion-item>
+      <ion-label color="royal">First Name</ion-label>
+      <ion-input [(ngModel)]="FirstName" placeholder="Text Input"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="royal">Last Name</ion-label>
+      <ion-input [(ngModel)]="LastName" placeholder="Text Input"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="royal">Birthdate</ion-label>
+      <ion-datetime displayFormat="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="birthdate" (ionChange)="findAge(birthdate)"></ion-datetime>
+    </ion-item>
+
+    <div *ngIf="Level == 'University'">
+      <ion-item>
+        <ion-label color="royal">University</ion-label>
+        <ion-input [(ngModel)]="School" placeholder="Text Input"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="royal">Program</ion-label>
+        <ion-input [(ngModel)]="Class" placeholder="Text Input"></ion-input>
+      </ion-item>
+    </div>
+    
+    <div *ngIf="Level != 'University'">          
+      <ion-item>
+        <ion-label color="royal">School</ion-label>
+        <ion-input [(ngModel)]="School" placeholder="Text Input"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="royal">Class</ion-label>
+        <ion-input [(ngModel)]="Class" placeholder="Text Input"></ion-input>
+      </ion-item>
+    </div>
+
+    <ion-item>
+      <ion-label color="royal">Year</ion-label>
+      <ion-input [(ngModel)]="Year" placeholder="Text Input"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="royal">Gender</ion-label>
+    </ion-item>
+    <ion-list radio-group [(ngModel)]="myGender">
+      <ion-item>
+        <ion-label> &emsp; Female</ion-label>
+        <ion-radio value="Female" color="secondary"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>  &emsp; Male</ion-label>
+        <ion-radio value="Male" color="secondary"></ion-radio>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-item *ngFor="let index of subnum">
+        <ion-label color="royal">Subject #{{ index }}</ion-label>
+        <ion-input [(ngModel)]="mySubjects[index - 1]" placeholder="Text Input"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button color="royal" (click)="AddSubject(totalsub + 1)"> Add Subject </button>
+    <button ion-button color="royal" *ngIf="totalsub != 0" (click)="RemoveSubject()"> Remove Subject </button>
+    
+    <p></p>
+    
+    <ion-list>
+      <ion-item *ngFor="let index of clubnum">
+        <ion-label color="royal">Activity #{{ index }}</ion-label>
+        <ion-input [(ngModel)]="myExtras[index - 1]" placeholder="Text Input"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button color="royal" (click)="AddExtra(totalclub + 1)"> Add Activity </button>
+    <button ion-button color="royal" *ngIf="totalclub != 0" (click)="RemoveExtra()"> Remove Activity </button>
+  
+    <p>
+    <ion-item>
+      <ion-label color="royal">Avatar</ion-label>
+    </ion-item>
+    </p>
+    <ion-list radio-group [(ngModel)]="avatar">
+      <ion-scroll scrollY="true" style="height:20vh">
+        <ion-item *ngFor="let index of images">
+          <ion-label> <img height=75px src="assets/imgs/{{ index }}"> </ion-label>
+          <ion-radio value="{{ index }}" color="secondary"></ion-radio>
+        </ion-item>
+      </ion-scroll>
+    </ion-list>
+
+
+    <p align="right">
+      <button ion-button color="royal" (click)="SaveInfo('Update')"> Save Changes </button>
+    </p>
+  </div>
+  
+  <ion-card>
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="assets/imgs/{{ avatar }}">
+      </ion-avatar>
+      <h2>{{ FirstName }} {{ LastName }}</h2>
+      <p> .:. {{ Year }} .:. </p>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <div *ngIf="Level == 'University'">
+        <p> <b> University: </b> {{ School }} </p>
+        <p> <b> Program: </b> {{ Class }} </p>
+      </div>
+
+      <div *ngIf="Level != 'University'">
+        <p> <b> School: </b> {{ School }} </p>
+        <p> <b> Class: </b> {{ Class }} </p>
+      </div>
+
+      <p> <b> Year: </b> {{ Year }} </p>
+      <p> <b> Birthday: </b> {{ birthdate }} </p>
+      <p> <b> Age: </b> {{ Age }} </p>
+      <p> <b> Gender: </b> {{ myGender}} </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <h2> <b> My Subjects </b> </h2>
+      <hr>
+      <p *ngFor="let current of mySubjects"> &emsp; <ion-icon name="{{ SubjectIcon }}"></ion-icon> {{ current }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <h2> <b> My Extra Curricular Activities </b> </h2>
+      <hr>
+      <p *ngFor="let current of myExtras"> &emsp; <ion-icon name="clipboard"></ion-icon> {{ current }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <p>
+    <button ion-button color="{{ Time.card }}" (click)="Time.custombg()"> Change Background </button>
+    <button float-right ion-button color="{{ Time.card }}" (click)="presentAlert('Delete')"> Delete Profile </button>
+  </p>
+  <br><br><br><br>
+
+  <ion-fab bottom center>
+    <button color="royal" ion-fab>Menu</button>
+    <ion-fab-list side="left">
+      <button color="fog" ion-fab (click)="open('Timetable')"><ion-icon name="school"></ion-icon></button>
+      <button color="fog" ion-fab color="dark"><ion-icon name="person"></ion-icon></button>
+    </ion-fab-list>
+    <ion-fab-list side="right">
+      <button color="fog" ion-fab (click)="open('Calculator')"><ion-icon name="calculator"></ion-icon></button>
+      <button color="fog" ion-fab (click)="open('Assignments')"><ion-icon name="paper"></ion-icon></button>
+    </ion-fab-list>
+    <ion-fab-list side="top">
+      <button color="fog" ion-fab (click)="open('Home')"><ion-icon name="home"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

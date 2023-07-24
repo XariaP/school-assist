@@ -1,0 +1,63 @@
+page-calculator {
+    input{
+        width: 100px;
+        text-align: center;
+    }
+
+    .b{
+        border: 1px solid black;
+    }
+
+    button{
+        background-color: gainsboro;
+        padding: 13px 20px;
+        border-radius: 5px;
+        width: 50px;
+
+        font-size: 20px;
+        width: 60px;
+    }
+
+    .b:hover{
+        background-color: skyblue;
+    }
+
+    #display{
+        background-image: url('../assets/imgs/Cold.png');
+        background-size: cover;
+        background-position: center;
+        
+        font-size: 28px;
+        border: 1px black solid;
+        width: 210px;
+        padding: 10px 20px;
+        text-align: right;
+        margin: auto;
+
+        width: 250px;
+        font-size: 35px;
+    }
+    
+    button.pressed{
+        background-color: rgb(170, 170, 170);
+        border: 1px solid black;
+    }
+
+    #case{
+        background-color: white;
+        background: url("../assets/imgs/Cold.png");
+
+        border: 1px black solid;
+        width: 240px;
+        margin: auto;
+        border-radius: 15px;
+        padding: 10px;
+
+        width: 280px;
+    }
+
+    button.bgswitch{
+        border: none;
+    }
+
+}

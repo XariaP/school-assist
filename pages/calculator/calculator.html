@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-navbar color="royal">
+    <ion-title>Calculator
+      <span style="float:right"> <ion-icon name="{{Time.skyicon}}"></ion-icon> {{Time.myTime}} {{Time.sky}} </span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="{{ Time.bgtheme }}">
+  <div id="case">
+    <!--Display Screen-->
+    <div id="display"> {{ ans }} </div>
+    <p>
+      <button class="b" (click)="clear()" style="width: 125px"> Clear </button>
+      <button class="b" (click)="delete()" style="font-size: 15px"> <ion-icon name="backspace"></ion-icon> </button>
+    </p>
+    <p> <!--First Row--> </p>
+    <button class="b" (click)="press('2')"> 7 </button>
+    <button class="b" (click)="press('3')"> 8 </button>
+    <button class="b" (click)="press('4')"> 9 </button>
+    <button class="b" (click)="operation('5')"> x </button>
+    <p> <!--Second Row--> </p>
+    <button class="b" (click)="press('6')"> 4 </button>
+    <button class="b" (click)="press('7')"> 5 </button>
+    <button class="b" (click)="press('8')"> 6 </button>
+    <button class="b" (click)="operation('9')"> - </button>
+    <p> <!--Third Row--> </p>
+    <button class="b" (click)="press('10')"> 1 </button>
+    <button class="b" (click)="press('11')"> 2 </button>
+    <button class="b" (click)="press('12')"> 3 </button>
+    <button class="b" (click)="operation('13')"> + </button>
+    <p> <!--Fourth Row--> </p><!--WIDTH:105PX-->
+    <button class="b" (click)="press('14')" style="width:125px"> 0 </button>
+    <button class="b" (click)="calc('15')"> = </button>
+    <button class="b" (click)="operation('16')"> / </button>
+  </div>
+
+  <br>
+
+  <div align="center"><ion-card class="box" color="opaque"> Day Counter </ion-card></div>
+  <ion-item>
+    <ion-label color="royal">From</ion-label>
+    <ion-datetime min="{{currentyear - yrRange}}" max="{{currentyear + yrRange}}" displayFormat="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="From" (ionChange)="datecount()"></ion-datetime>
+  </ion-item>
+  <ion-item no-lines>
+    <ion-label color="royal">To</ion-label>
+    <ion-datetime min="{{currentyear - yrRange}}" max="{{currentyear + yrRange}}" displayFormat="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="To" (ionChange)="datecount()"></ion-datetime>
+  </ion-item>
+  <div align="center"><ion-card class="box" color="opaque"> {{ days }} Day<span *ngIf="days*days != 1">s</span> from {{ From }} to {{ To }} </ion-card></div>
+  <div align="center">
+    <button ion-button style="float:left" class="box" color="{{ Noti.card }}" (click)="setRange(-1)"> - </button>
+    <button ion-button style="width:50%" class="box" color="{{ Noti.card }}"> Range: {{yrRange}} year<span *ngIf="yrRange != 1">s</span> </button>
+    <button ion-button style="float:right" class="box" color="{{ Noti.card }}" (click)="setRange(+1)"> + </button>
+  </div>
+  
+  <br>
+
+  <div align="center" *ngIf="show">
+    <button class="bgswitch" *ngFor="let current of theme" ion-button color="dark" round (click)="changebg(current)" style="width: 150px;">
+      {{ current }}
+    </button>
+    <br>
+  </div>
+  
+  <div align="center">
+    <button class="bgswitch" (click)="showlist()" full ion-button color="royal"> {{ bgtext }} </button>
+  </div>
+
+  <br><br><br><br>
+
+  <ion-fab bottom center>
+    <button color="royal" ion-fab>Menu</button>
+    <ion-fab-list side="left">
+      <button color="fog" ion-fab (click)="open('Timetable')"><ion-icon name="school"></ion-icon></button>
+      <button color="fog" ion-fab (click)="open('Profile')"><ion-icon name="person"></ion-icon></button>
+    </ion-fab-list>
+    <ion-fab-list side="right">
+      <button color="fog" ion-fab color="dark"><ion-icon name="calculator"></ion-icon></button>
+      <button color="fog" ion-fab (click)="open('Assignments')"><ion-icon name="paper"></ion-icon></button>
+    </ion-fab-list>
+    <ion-fab-list side="top">
+      <button color="fog" ion-fab (click)="open('Home')"><ion-icon name="home"></ion-icon></button>
+    </ion-fab-list>  
+  </ion-fab>
+</ion-content>
