@@ -3,7 +3,10 @@ Mobile Application developed during the Caribbean Science Foundation Coding Work
 
 ## Technologies Used
 Ionic V3  
+HTML  
+CSS  
 Angular  
+JavaScript
 TypeScript  
 Node.js  
 Android Studio  
