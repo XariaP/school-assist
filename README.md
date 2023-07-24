@@ -8,3 +8,9 @@ TypeScript
 Node.js  
 Android Studio  
 
+## Notes
+- APK File included for demostration purposes.  
+- Code written in 2018 with Ionic V3 before I learned about clean code and best practices.  
+- Not all files to rebuild the app may be here.  
+
+TODO: Restructure code, possibly migrate code to a more recent Ionic version
